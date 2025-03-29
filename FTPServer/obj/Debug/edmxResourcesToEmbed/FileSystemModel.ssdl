@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FILE_SYSTEMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CompositeItem">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ItemPath" Type="nvarchar" MaxLength="1" Nullable="false" />
+    <Property Name="ParentPath" Type="nvarchar" MaxLength="1" Nullable="false" />
+    <Property Name="ItemName" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="UserId" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Composite__UserI__3A81B327">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="CompositeItem" Type="Self.CompositeItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CompositeItem">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FILE_SYSTEMModelStoreContainer">
+    <EntitySet Name="CompositeItem" EntityType="Self.CompositeItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Composite__UserI__3A81B327" Association="Self.FK__Composite__UserI__3A81B327">
+      <End Role="User" EntitySet="User" />
+      <End Role="CompositeItem" EntitySet="CompositeItem" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
