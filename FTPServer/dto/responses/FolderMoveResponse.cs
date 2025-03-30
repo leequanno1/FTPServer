@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FTPServer.dto.responses
 {
-    internal class FolderUpdateResponse
+    internal class FolderMoveResponse
     {
         private int _status;
         private string _message;

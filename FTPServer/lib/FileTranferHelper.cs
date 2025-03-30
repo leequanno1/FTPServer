@@ -22,7 +22,7 @@ namespace lib
         {
             if (!File.Exists(filePath))
             {
-                Console.WriteLine("File không tồn tại!");
+                Console.WriteLine("File is not exist!");
                 return;
             }
             try

@@ -33,8 +33,10 @@ namespace lib
             fileServerSocket.BeginAccept(new AsyncCallback(HandleFileConnection), null);
             while (true)
             {
-                if (Console.ReadLine() == "Exit") break;
+                if (Console.ReadLine().ToLower().Trim() == "exit") break;
             }
+            server.Close();
+            fileServerSocket.Close();
         }
 
         public static Socket GetFileTranferClientSocket(string ipEndpoint)

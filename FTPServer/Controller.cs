@@ -160,7 +160,6 @@ namespace FTPServer
             });
         }
 
-
         public static void UpdateFolderName(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FolderUpdateResponse>(clientSocket, globalRequest)) return;
@@ -185,7 +184,46 @@ namespace FTPServer
             {
                 Route = globalRequest.Route,
                 AuthentToken = globalRequest.AuthentToken,
-                RequestObject = new FolderAddResponse()
+                RequestObject = new FolderUpdateResponse()
+                {
+                    Status = status,
+                    Message = message
+                }
+            });
+        }
+
+        public static void MoveFolder(Socket clientSocket, GlobalRequest globalRequest)
+        {
+            if (!DoValidateToken<FolderMoveResponse>(clientSocket, globalRequest)) return;
+            FolderMoveRequest request = globalRequest.RequestObject as FolderMoveRequest;
+            int status = ResponseStatus.SUCCESS;
+            string message = ResponseStatus.SUCCESS_MESSAGE;
+            string userId = globalRequest.AuthentToken.Split('.')[0];
+            string folderId = FolderExisted(request.FolderPath, userId);
+            if (String.IsNullOrEmpty(folderId))
+            {
+                status = ResponseStatus.ERROR;
+                message = ResponseStatus.ERROR_MESSAGE;
+            } else
+            {
+                CompositeItem curentFolder = dbContext.CompositeItems.First(folder => folder.ItemId == folderId);
+
+                // đổi path item con
+                var childItems = dbContext.CompositeItems.Where(item => item.ParentPath == curentFolder.ItemPath);
+                foreach(CompositeItem childItem in childItems)
+                {
+                    childItem.ParentPath = request.FolderNewPath;
+                    childItem.ItemPath = $"{request.FolderNewPath}/{childItem.ItemName}";
+                }
+                curentFolder.ItemPath = request.FolderNewPath;
+                curentFolder.ParentPath = request.FolderNewPath.Substring(0, request.FolderNewPath.Length - curentFolder.ItemName.Length - 1);
+                dbContext.SaveChangesAsync();
+            }
+            TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
+            {
+                Route = globalRequest.Route,
+                AuthentToken = globalRequest.AuthentToken,
+                RequestObject = new FolderMoveResponse()
                 {
                     Status = status,
                     Message = message
@@ -274,7 +312,7 @@ namespace FTPServer
 
         public static void DownloadFile(Socket clientSocket, GlobalRequest globalRequest)
         {
-            if (!DoValidateToken<FileUpdateResponse>(clientSocket, globalRequest)) return;
+            if (!DoValidateToken<FileDowloadResponse>(clientSocket, globalRequest)) return;
             FileDownloadRequest request = globalRequest.RequestObject as FileDownloadRequest;
             string userId = globalRequest.AuthentToken.Split('.')[0];
             // nhận thông tin file
@@ -332,6 +370,38 @@ namespace FTPServer
 
         }
 
+        public static void MoveFile(Socket clientSocket, GlobalRequest globalRequest)
+        {
+            if (!DoValidateToken<FileMoveResponse>(clientSocket, globalRequest)) return;
+            FileMoveRequest request = globalRequest.RequestObject as FileMoveRequest;
+            int status = ResponseStatus.SUCCESS;
+            string message = ResponseStatus.SUCCESS_MESSAGE;
+            string userId = globalRequest.AuthentToken.Split('.')[0];
+            string fileId = FolderExisted(request.FilePath, userId);
+            if (String.IsNullOrEmpty(fileId))
+            {
+                status = ResponseStatus.ERROR;
+                message = ResponseStatus.ERROR_MESSAGE;
+            }
+            else
+            {
+                CompositeItem currentFile = dbContext.CompositeItems.First(file => file.ItemId == fileId);
+                currentFile.ItemPath = request.FileNewPath;
+                currentFile.ParentPath = request.FileNewPath.Substring(0, request.FileNewPath.Length - currentFile.ItemName.Length - 1);
+                dbContext.SaveChangesAsync();
+            }
+            TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
+            {
+                Route = globalRequest.Route,
+                AuthentToken = globalRequest.AuthentToken,
+                RequestObject = new FileMoveResponse()
+                {
+                    Status = status,
+                    Message = message
+                }
+            });
+        }
+        
         public static void DeleteFile(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FileDeleteResponse>(clientSocket, globalRequest)) return;

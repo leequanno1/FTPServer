@@ -20,10 +20,12 @@ namespace FTPServer
             route.Add("/folder-add", Controller.AddFolder);
             route.Add("/folder-update", Controller.UpdateFolderName);
             route.Add("/folder-delete", Controller.DeleteFolder);
+            route.Add("/folder-move", Controller.MoveFolder);
             route.Add("/file-add", Controller.AddFile);
             route.Add("/file-update", Controller.UpdateFileName);
             route.Add("/file-delete", Controller.DeleteFile);
             route.Add("/file-download", Controller.DownloadFile);
+            route.Add("/file-move", Controller.MoveFile);
 
             Server.Run(new IPEndPoint(IPAddress.Loopback, 9000), new IPEndPoint(IPAddress.Loopback, 9001), route);
         }
