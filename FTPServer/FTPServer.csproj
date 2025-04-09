@@ -92,9 +92,11 @@
     <Compile Include="dto\requests\FileAddRequest.cs" />
     <Compile Include="dto\requests\FileDeleteRequest.cs" />
     <Compile Include="dto\requests\FileDownloadRequest.cs" />
+    <Compile Include="dto\requests\FileMoveRequest.cs" />
     <Compile Include="dto\requests\FileUpdateRequest.cs" />
     <Compile Include="dto\requests\FolderAddRequest.cs" />
     <Compile Include="dto\requests\FolderDeleteRequest.cs" />
+    <Compile Include="dto\requests\FolderMoveRequest.cs" />
     <Compile Include="dto\requests\FolderUpdateRequest.cs" />
     <Compile Include="dto\requests\ListRequest.cs" />
     <Compile Include="dto\requests\LoginRequest.cs" />
@@ -102,9 +104,11 @@
     <Compile Include="dto\responses\FileAddResponse.cs" />
     <Compile Include="dto\responses\FileDeleteResponse.cs" />
     <Compile Include="dto\responses\FileDowloadResponse.cs" />
+    <Compile Include="dto\responses\FileMoveResponse.cs" />
     <Compile Include="dto\responses\FileUpdateResponse.cs" />
     <Compile Include="dto\responses\FolderAddResponse.cs" />
     <Compile Include="dto\responses\FolderDeleteResponse.cs" />
+    <Compile Include="dto\responses\FolderMoveResponse.cs" />
     <Compile Include="dto\responses\FolderUpdateResponse.cs" />
     <Compile Include="dto\responses\ListResponse.cs" />
     <Compile Include="dto\responses\LoginResponse.cs" />
