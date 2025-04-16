@@ -27,5 +27,6 @@ namespace FTPServer
     
         public virtual DbSet<CompositeItem> CompositeItems { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

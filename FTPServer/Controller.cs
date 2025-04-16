@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace FTPServer
         // authen
         public static void LoginController(Socket clientSocket, GlobalRequest globalRequest)
         {
-            LoginRequest request = globalRequest.RequestObject as LoginRequest;
+            LoginRequest request = ConverTo<LoginRequest>(globalRequest.RequestObject);
             User user = dbContext.Users.First(item => item.Username == request.Username && item.Password == request.Password);
             string id = user == null ? String.Empty : user.UserId;
 
@@ -51,7 +52,7 @@ namespace FTPServer
 
         public static void SignUpController(Socket clientSocket, GlobalRequest globalRequest)
         {
-            SignupRequest request = globalRequest.RequestObject as SignupRequest;
+            SignupRequest request = ConverTo<SignupRequest>(globalRequest.RequestObject);
             // check if username is existed?
             if (UsernameExisted(request.Username))
             {
@@ -68,12 +69,14 @@ namespace FTPServer
                 return;
             }
 
-            dbContext.Users.Add(new User()
+            User user = new User()
             {
                 UserId = GetId(),
                 Username = request.Username,
                 Password = request.Password,
-            });
+            };
+
+            dbContext.Users.Add(user);
 
             dbContext.SaveChangesAsync();
             // send response
@@ -93,7 +96,7 @@ namespace FTPServer
         public static void ListController(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<ListResponse>(clientSocket, globalRequest)) return;
-            ListRequest request = globalRequest.RequestObject as ListRequest;
+            ListRequest request = ConverTo<ListRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
             var compositeItems = dbContext.CompositeItems.Where(item => item.UserId == userId && item.ParentPath == request.FolderPath);
             List<CompositeItemDTO> folders = new List<CompositeItemDTO>();
@@ -126,7 +129,7 @@ namespace FTPServer
         public static void AddFolder(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FolderAddResponse>(clientSocket, globalRequest)) return;
-            FolderAddRequest request = globalRequest.RequestObject as FolderAddRequest;
+            FolderAddRequest request = ConverTo<FolderAddRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
             string message = ResponseStatus.SUCCESS_MESSAGE;
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -163,7 +166,7 @@ namespace FTPServer
         public static void UpdateFolderName(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FolderUpdateResponse>(clientSocket, globalRequest)) return;
-            FolderUpdateRequest request = globalRequest.RequestObject as FolderUpdateRequest;
+            FolderUpdateRequest request = ConverTo<FolderUpdateRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
             string message = ResponseStatus.SUCCESS_MESSAGE;
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -195,7 +198,7 @@ namespace FTPServer
         public static void MoveFolder(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FolderMoveResponse>(clientSocket, globalRequest)) return;
-            FolderMoveRequest request = globalRequest.RequestObject as FolderMoveRequest;
+            FolderMoveRequest request = ConverTo<FolderMoveRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
             string message = ResponseStatus.SUCCESS_MESSAGE;
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -234,7 +237,7 @@ namespace FTPServer
         public static void DeleteFolder(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FolderDeleteResponse>(clientSocket, globalRequest)) return;
-            FolderDeleteRequest request = globalRequest.RequestObject as FolderDeleteRequest;
+            FolderDeleteRequest request = ConverTo<FolderDeleteRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
             int status = ResponseStatus.SUCCESS;
             string message = ResponseStatus.SUCCESS_MESSAGE;
@@ -274,7 +277,7 @@ namespace FTPServer
         public static void AddFile(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FileAddResponse>(clientSocket, globalRequest)) return;
-            FileAddRequest request = globalRequest.RequestObject as FileAddRequest;
+            FileAddRequest request = ConverTo<FileAddRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
             // check if file existed
             string fileId = FileExisted($"{request.FolderPath}/{request.FileName}", userId);
@@ -313,7 +316,7 @@ namespace FTPServer
         public static void DownloadFile(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FileDowloadResponse>(clientSocket, globalRequest)) return;
-            FileDownloadRequest request = globalRequest.RequestObject as FileDownloadRequest;
+            FileDownloadRequest request = ConverTo<FileDownloadRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
             // nhận thông tin file
             CompositeItem file = dbContext.CompositeItems.First(item => item.ItemPath == request.FilePath && item.UserId == userId);
@@ -340,7 +343,7 @@ namespace FTPServer
         public static void UpdateFileName(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FileUpdateResponse>(clientSocket, globalRequest)) return;
-            FileUpdateRequest request = globalRequest.RequestObject as FileUpdateRequest;
+            FileUpdateRequest request = ConverTo<FileUpdateRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
             string fileId = FileExisted(request.FilePath, userId);
             int status = ResponseStatus.SUCCESS;
@@ -373,7 +376,7 @@ namespace FTPServer
         public static void MoveFile(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FileMoveResponse>(clientSocket, globalRequest)) return;
-            FileMoveRequest request = globalRequest.RequestObject as FileMoveRequest;
+            FileMoveRequest request = ConverTo<FileMoveRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
             string message = ResponseStatus.SUCCESS_MESSAGE;
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -405,7 +408,7 @@ namespace FTPServer
         public static void DeleteFile(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FileDeleteResponse>(clientSocket, globalRequest)) return;
-            FileDeleteRequest request = globalRequest.RequestObject as FileDeleteRequest;
+            FileDeleteRequest request = ConverTo<FileDeleteRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
             string fileId = FileExisted(request.FilePath, userId);
             int status = ResponseStatus.SUCCESS;
@@ -442,7 +445,7 @@ namespace FTPServer
         /// <returns>Return true if user existed</returns>
         private static bool UsernameExisted(string username)
         {
-            User user = dbContext.Users.First(x => x.Username == username);
+            User user = dbContext.Users.FirstOrDefault(x => x.Username == username);
             return user != null;
         }
 
@@ -530,6 +533,13 @@ namespace FTPServer
         private static string StandardizeFilePath(string fileId)
         {
             return CompositeConstance.ROOT_FOLDER_PATH + fileId;
+        }
+    
+        private static T ConverTo<T>(object value)
+        {
+            string json = JsonSerializer.Serialize(value);
+            T request = JsonSerializer.Deserialize<T>(json);
+            return request;
         }
     }
 }

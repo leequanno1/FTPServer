@@ -10,7 +10,7 @@ namespace lib
     {
         private string route;
         private string authentToken;
-        private Object requestObject;
+        private object requestObject;
 
         public string Route { get => route; set => route = value; }
         public object RequestObject { get => requestObject; set => requestObject = value; }
