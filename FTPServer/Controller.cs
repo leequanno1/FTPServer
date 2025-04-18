@@ -261,7 +261,7 @@ namespace FTPServer
                 // delete all inside item in db
                 dbContext.CompositeItems.RemoveRange(composites);
                 // delete folder
-                dbContext.CompositeItems.Remove(dbContext.CompositeItems.   (item => item.ItemId == folderId));
+                dbContext.CompositeItems.Remove(dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == folderId));
                 dbContext.SaveChangesAsync();
             }
             // send response
