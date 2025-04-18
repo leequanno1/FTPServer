@@ -71,9 +71,12 @@ namespace lib
                 // Nhận dữ liệu file
                 using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {
-                    while ((bytesRead = socket.Receive(buffer)) > 0)
+                    bytesRead = socket.Receive(buffer);
+                    Console.WriteLine("Byte read: " + bytesRead);
+                    while (bytesRead  > 0)
                     {
                         fs.Write(buffer, 0, bytesRead);
+                        Console.WriteLine("Tr: " + totalRead);
                         totalRead += bytesRead;
 
                         if (statusHandler != null) statusHandler(totalRead);
@@ -81,6 +84,7 @@ namespace lib
                         // Kiểm tra nếu nhận hết dữ liệu
                         if (bytesRead < BufferSize)
                             break;
+                       bytesRead = socket.Receive(buffer);
                     }
                 }
                 Console.WriteLine($"File saved at: {filePath}");

@@ -3,35 +3,43 @@
   "WorkspaceRootPath": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\lib\\filetranferhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\lib\\filetranferhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\lib\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\lib\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\ftpserver\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\ftpserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\ftpserver\\dto\\compositeconstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\dto\\compositeconstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\ftpserver\\dto\\responses\\signupresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\dto\\responses\\signupresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\dto\\responses\\folderupdateresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\dto\\responses\\folderupdateresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\dto\\compositeconstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\dto\\compositeconstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\dto\\responses\\listresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\ftpserver\\dto\\responses\\listresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\dto\\responses\\listresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\dto\\responses\\signupresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\dto\\responses\\signupresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\dto\\responses\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\ftpserver\\dto\\responses\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\dto\\responses\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|d:\\university\\year 4\\semester 2\\network programming\\project\\ftpserver\\ftpserver\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\ftpserver\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{01215D0A-9190-4A5D-B374-D667E3AA6E16}|FTPServer\\FTPServer.csproj|solutionrelative:ftpserver\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
@@ -42,8 +50,38 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FileTranferHelper.cs",
+              "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\lib\\FileTranferHelper.cs",
+              "RelativeDocumentMoniker": "FTPServer\\lib\\FileTranferHelper.cs",
+              "ToolTip": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\lib\\FileTranferHelper.cs",
+              "RelativeToolTip": "FTPServer\\lib\\FileTranferHelper.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAgwEEAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T11:58:28.548Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Server.cs",
+              "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\lib\\Server.cs",
+              "RelativeDocumentMoniker": "FTPServer\\lib\\Server.cs",
+              "ToolTip": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\lib\\Server.cs",
+              "RelativeToolTip": "FTPServer\\lib\\Server.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwCkAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T11:35:19.674Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 5,
@@ -52,14 +90,14 @@
               "RelativeDocumentMoniker": "FTPServer\\dto\\responses\\SignupResponse.cs",
               "ToolTip": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\dto\\responses\\SignupResponse.cs",
               "RelativeToolTip": "FTPServer\\dto\\responses\\SignupResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-18T10:35:42.738Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "ListResponse.cs",
               "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\dto\\responses\\ListResponse.cs",
               "RelativeDocumentMoniker": "FTPServer\\dto\\responses\\ListResponse.cs",
@@ -67,68 +105,63 @@
               "RelativeToolTip": "FTPServer\\dto\\responses\\ListResponse.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T10:32:46.289Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-18T10:32:46.289Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Controller.cs",
               "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\Controller.cs",
               "RelativeDocumentMoniker": "FTPServer\\Controller.cs",
               "ToolTip": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\Controller.cs",
               "RelativeToolTip": "FTPServer\\Controller.cs",
-              "ViewState": "AgIAAK8AAAAAAAAAAAAUwL4AAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAkwM0AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-18T08:44:52.37Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "CompositeConstance.cs",
               "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\dto\\CompositeConstance.cs",
               "RelativeDocumentMoniker": "FTPServer\\dto\\CompositeConstance.cs",
               "ToolTip": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\dto\\CompositeConstance.cs",
               "RelativeToolTip": "FTPServer\\dto\\CompositeConstance.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-18T08:48:16.16Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\Program.cs",
               "RelativeDocumentMoniker": "FTPServer\\Program.cs",
               "ToolTip": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\Program.cs",
               "RelativeToolTip": "FTPServer\\Program.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwBUAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwBQAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-18T08:39:57.026Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "FolderUpdateResponse.cs",
               "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\dto\\responses\\FolderUpdateResponse.cs",
               "RelativeDocumentMoniker": "FTPServer\\dto\\responses\\FolderUpdateResponse.cs",
               "ToolTip": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\dto\\responses\\FolderUpdateResponse.cs",
               "RelativeToolTip": "FTPServer\\dto\\responses\\FolderUpdateResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-18T10:33:11.259Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "LoginResponse.cs",
               "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\dto\\responses\\LoginResponse.cs",
               "RelativeDocumentMoniker": "FTPServer\\dto\\responses\\LoginResponse.cs",
@@ -136,12 +169,11 @@
               "RelativeToolTip": "FTPServer\\dto\\responses\\LoginResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T10:35:29.805Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-18T10:35:29.805Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "App.config",
               "DocumentMoniker": "D:\\University\\Year 4\\Semester 2\\Network Programming\\Project\\FTPServer\\FTPServer\\App.config",
               "RelativeDocumentMoniker": "FTPServer\\App.config",
@@ -149,8 +181,7 @@
               "RelativeToolTip": "FTPServer\\App.config",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-04-18T08:40:07.162Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-18T08:40:07.162Z"
             }
           ]
         }

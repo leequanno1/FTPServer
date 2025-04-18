@@ -44,6 +44,7 @@ namespace lib
             Socket socket = null;
             lock(locker)
             {
+                Console.WriteLine(ipEndpoint);
                 socket = clientFileTranferSockets[ipEndpoint];
             }
             return socket;
@@ -71,11 +72,13 @@ namespace lib
         static void HandleFileConnection(IAsyncResult ar)
         {
             // nhận kết nối và thêm vào dictionary với key là IPEndpoint
-            Socket clientSocket = server.EndAccept(ar);
+            Socket clientSocket = fileServerSocket.EndAccept(ar);
             fileServerSocket.BeginAccept(new AsyncCallback(HandleFileConnection), null);
             lock (locker)
             {
+                Console.WriteLine(clientSocket.RemoteEndPoint.ToString());
                 clientFileTranferSockets.Add(clientSocket.RemoteEndPoint.ToString(), clientSocket);
+                Console.WriteLine(clientFileTranferSockets.ContainsKey(clientSocket.RemoteEndPoint.ToString()));
             }
         }
 
