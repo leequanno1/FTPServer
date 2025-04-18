@@ -27,7 +27,7 @@ namespace FTPServer
         public static void LoginController(Socket clientSocket, GlobalRequest globalRequest)
         {
             LoginRequest request = ConverTo<LoginRequest>(globalRequest.RequestObject);
-            User user = dbContext.Users.First(item => item.Username == request.Username && item.Password == request.Password);
+            User user = dbContext.Users.FirstOrDefault(item => item.Username == request.Username && item.Password == request.Password);
             string id = user == null ? String.Empty : user.UserId;
 
             if (String.IsNullOrEmpty(id))
@@ -179,7 +179,7 @@ namespace FTPServer
             }
             else
             {
-                CompositeItem folder = dbContext.CompositeItems.First(item => item.ItemId == folderId);
+                CompositeItem folder = dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == folderId);
                 folder.ItemName = request.FolderName;
                 folder.ItemPath = $"{folder.ParentPath}/{request.FolderName}";
                 folder.DateModify = DateTime.Now;
@@ -211,7 +211,7 @@ namespace FTPServer
                 message = ResponseStatus.ERROR_MESSAGE;
             } else
             {
-                CompositeItem curentFolder = dbContext.CompositeItems.First(folder => folder.ItemId == folderId);
+                CompositeItem curentFolder = dbContext.CompositeItems.FirstOrDefault(folder => folder.ItemId == folderId);
 
                 // đổi path item con
                 var childItems = dbContext.CompositeItems.Where(item => item.ParentPath == curentFolder.ItemPath);
@@ -261,7 +261,7 @@ namespace FTPServer
                 // delete all inside item in db
                 dbContext.CompositeItems.RemoveRange(composites);
                 // delete folder
-                dbContext.CompositeItems.Remove(dbContext.CompositeItems.First(item => item.ItemId == folderId));
+                dbContext.CompositeItems.Remove(dbContext.CompositeItems.   (item => item.ItemId == folderId));
                 dbContext.SaveChangesAsync();
             }
             // send response
@@ -377,7 +377,7 @@ namespace FTPServer
             FileDownloadRequest request = ConverTo<FileDownloadRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
             // nhận thông tin file
-            CompositeItem file = dbContext.CompositeItems.First(item => item.ItemPath == request.FilePath && item.UserId == userId);
+            CompositeItem file = dbContext.CompositeItems.FirstOrDefault(item => item.ItemPath == request.FilePath && item.UserId == userId);
             // lấy socket client
             Socket clientFileSocket = Server.GetFileTranferClientSocket(request.ClientEndpoint);
             string filePath = File.Exists(StandardizeFilePath(file.ItemId)) ? StandardizeFilePath(file.ItemId) : StandardizeFilePath(file.CopyFrom);
@@ -414,7 +414,7 @@ namespace FTPServer
             } else
             {
                 // update db
-                CompositeItem compositeItem = dbContext.CompositeItems.First(item => item.ItemId == fileId);
+                CompositeItem compositeItem = dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == fileId);
                 compositeItem.ItemName = request.FileName;
                 compositeItem.ItemPath = $"{compositeItem.ParentPath}/{request.FileName}";
                 compositeItem.DateModify = DateTime.Now;
@@ -448,7 +448,7 @@ namespace FTPServer
             }
             else
             {
-                CompositeItem currentFile = dbContext.CompositeItems.First(file => file.ItemId == fileId);
+                CompositeItem currentFile = dbContext.CompositeItems.FirstOrDefault(file => file.ItemId == fileId);
                 currentFile.ItemPath = request.FileNewPath;
                 currentFile.ParentPath = request.FileNewPath.Substring(0, request.FileNewPath.Length - currentFile.ItemName.Length - 1);
                 currentFile.DateModify = DateTime.Now;
@@ -519,7 +519,7 @@ namespace FTPServer
             else
             {
                 // update db
-                dbContext.CompositeItems.Remove(dbContext.CompositeItems.First(item => item.ItemId == fileId));
+                dbContext.CompositeItems.Remove(dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == fileId));
                 dbContext.SaveChangesAsync();
             }
             TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
@@ -573,7 +573,7 @@ namespace FTPServer
         /// <returns>Return folder id if existed else null</returns>
         private static string FolderExisted(String folderPath, string userId)
         {
-            var folder = dbContext.CompositeItems.First(item => item.UserId == userId && item.ItemPath == folderPath && item.ItemType == CompositeConstance.FOLDER);
+            var folder = dbContext.CompositeItems.FirstOrDefault(item => item.UserId == userId && item.ItemPath == folderPath && item.ItemType == CompositeConstance.FOLDER);
             return folder != null ? folder.ItemId : null;
         }
 
@@ -610,7 +610,7 @@ namespace FTPServer
         /// <returns>Return file id if existed else null</returns>
         private static string FileExisted(string filePath, string userId)
         {
-            var file = dbContext.CompositeItems.First(item => item.UserId == userId && item.ItemPath == filePath);
+            var file = dbContext.CompositeItems.FirstOrDefault(item => item.UserId == userId && item.ItemPath == filePath);
             return file != null ? file.ItemId : null;
         }
 
