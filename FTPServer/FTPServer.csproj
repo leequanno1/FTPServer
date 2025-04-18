@@ -135,7 +135,7 @@
     <Compile Include="lib\Client.cs" />
     <Compile Include="lib\GlobalResponse.cs" />
     <Compile Include="lib\Server.cs" />
-    <Compile Include="lib\FileTranferHelper.cs" />
+    <Compile Include="lib\FileTransferHelper.cs" />
     <Compile Include="lib\GlobalRequest.cs" />
     <Compile Include="lib\ItemSingleton.cs" />
     <Compile Include="lib\RequestEncapsulation.cs" />

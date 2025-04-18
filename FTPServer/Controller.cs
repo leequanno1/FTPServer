@@ -617,14 +617,17 @@ namespace FTPServer
 
         private static void HandleUploadFile(Socket clientFileSocket, string fileId, long size)
         {
-            FileTranferHelper.ReceiveFileFrom(clientFileSocket, CompositeConstance.ROOT_FOLDER_PATH, fileId);
+            Console.WriteLine(clientFileSocket.RemoteEndPoint.ToString());
+            Console.WriteLine(clientFileSocket.LocalEndPoint.ToString());
+            FileTransferHelper.ReceiveFileFrom(clientFileSocket, CompositeConstance.ROOT_FOLDER_PATH, fileId);
             Server.RemoveSocket(clientFileSocket.ToString());
-            clientFileSocket.Close();
+            clientFileSocket.Shutdown(SocketShutdown.Both);
+            Console.WriteLine("Shutdown");
         }
 
         private static void HandleDownloadFile(Socket clientFileSocket, string filePath)
         {
-            FileTranferHelper.SendFileTo(clientFileSocket, filePath);
+            FileTransferHelper.SendFileTo(clientFileSocket, filePath);
             while (clientFileSocket.Connected) { Thread.Sleep(100); }
             Server.RemoveSocket(clientFileSocket.ToString());
         }
