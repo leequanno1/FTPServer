@@ -382,6 +382,7 @@ namespace FTPServer
             // lấy socket client
             Socket clientFileSocket = Server.GetFileTranferClientSocket(request.ClientEndpoint);
             string filePath = File.Exists(StandardizeFilePath(file.ItemId)) ? StandardizeFilePath(file.ItemId) : StandardizeFilePath(file.CopyFrom);
+            Console.WriteLine(filePath);
             FileInfo fileInfo = new FileInfo(filePath);
             
             // gửi response sẳn sàng kết nối
@@ -397,7 +398,7 @@ namespace FTPServer
                 }
             });
             // bắt đầu truyền file
-            HandleDownloadFile(clientFileSocket, StandardizeFilePath(filePath));
+            HandleDownloadFile(clientFileSocket, filePath);
         }
 
         public static void UpdateFileName(Socket clientSocket, GlobalRequest globalRequest)
@@ -627,14 +628,20 @@ namespace FTPServer
 
         private static void HandleDownloadFile(Socket clientFileSocket, string filePath)
         {
+            Console.WriteLine(clientFileSocket.RemoteEndPoint);
+            Console.WriteLine(clientFileSocket.LocalEndPoint);
             FileTransferHelper.SendFileTo(clientFileSocket, filePath);
             while (clientFileSocket.Connected) { Thread.Sleep(100); }
             Server.RemoveSocket(clientFileSocket.ToString());
+            while (Controller.IsSocketConnected(clientFileSocket))
+            {
+                Thread.Sleep(100);
+            }
         }
 
         private static string StandardizeFilePath(string fileId)
         {
-            return CompositeConstance.ROOT_FOLDER_PATH + fileId;
+            return CompositeConstance.ROOT_FOLDER_PATH +"/"+ fileId;
         }
     
         private static T ConverTo<T>(object value)
@@ -642,6 +649,18 @@ namespace FTPServer
             string json = JsonSerializer.Serialize(value);
             T request = JsonSerializer.Deserialize<T>(json);
             return request;
+        }
+
+        private static bool IsSocketConnected(Socket socket)
+        {
+            try
+            {
+                return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
+            }
+            catch (SocketException)
+            {
+                return false;
+            }
         }
     }
 }
