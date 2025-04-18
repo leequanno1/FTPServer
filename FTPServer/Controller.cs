@@ -98,7 +98,7 @@ namespace FTPServer
             if (!DoValidateToken<ListResponse>(clientSocket, globalRequest)) return;
             ListRequest request = ConverTo<ListRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
-            var compositeItems = dbContext.CompositeItems.Where(item => item.UserId == userId && item.ParentPath == request.FolderPath);
+            var compositeItems = dbContext.CompositeItems.Where(item => item.UserId == userId && item.ParentPath == request.FolderPath).ToList();
             List<CompositeItemDTO> folders = new List<CompositeItemDTO>();
             List<CompositeItemDTO> files = new List<CompositeItemDTO>();
             foreach (var item in compositeItems)
@@ -185,6 +185,7 @@ namespace FTPServer
                 folder.DateModify = DateTime.Now;
                 dbContext.SaveChangesAsync();
             }
+            Console.WriteLine("Folder path: " + request.FolderPath + " | FolderId: " + folderId);
             TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
             {
                 Route = globalRequest.Route,

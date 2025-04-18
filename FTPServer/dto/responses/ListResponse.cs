@@ -12,7 +12,7 @@ namespace FTPServer.dto.responses
         private List<CompositeItemDTO> folders; 
         private List<CompositeItemDTO> files;
 
-        internal List<CompositeItemDTO> Folders { get => folders; set => folders = value; }
-        internal List<CompositeItemDTO> Files { get => files; set => files = value; }
+        public List<CompositeItemDTO> Folders { get => folders; set => folders = value; }
+        public List<CompositeItemDTO> Files { get => files; set => files = value; }
     }
 }

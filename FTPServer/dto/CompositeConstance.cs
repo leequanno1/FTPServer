@@ -11,6 +11,6 @@ namespace FTPServer.dto
         public const string FILE = "file";
         public const string FOLDER = "folder";
         public const string ROOT_FOLDER_NAME = "root";
-        public const string ROOT_FOLDER_PATH = "C:/Users/acer/Desktop/FileStorage";
+        public const string ROOT_FOLDER_PATH = "D://FTPServer";
     }
 }
