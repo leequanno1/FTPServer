@@ -148,6 +148,7 @@ namespace FTPServer
                     ItemType = CompositeConstance.FOLDER,
                     ParentPath = request.ParrentPath,
                     UserId = userId,
+                    DateModify = DateTime.Now,
                 });
                 dbContext.SaveChangesAsync();
             }
@@ -181,6 +182,7 @@ namespace FTPServer
                 CompositeItem folder = dbContext.CompositeItems.First(item => item.ItemId == folderId);
                 folder.ItemName = request.FolderName;
                 folder.ItemPath = $"{folder.ParentPath}/{request.FolderName}";
+                folder.DateModify = DateTime.Now;
                 dbContext.SaveChangesAsync();
             }
             TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
@@ -217,9 +219,11 @@ namespace FTPServer
                 {
                     childItem.ParentPath = request.FolderNewPath;
                     childItem.ItemPath = $"{request.FolderNewPath}/{childItem.ItemName}";
+                    childItem.DateModify = DateTime.Now;
                 }
                 curentFolder.ItemPath = request.FolderNewPath;
                 curentFolder.ParentPath = request.FolderNewPath.Substring(0, request.FolderNewPath.Length - curentFolder.ItemName.Length - 1);
+                curentFolder.DateModify = DateTime.Now;
                 dbContext.SaveChangesAsync();
             }
             TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
@@ -273,6 +277,59 @@ namespace FTPServer
             });
         }
 
+        public static void CopyFolder(Socket clientSocket, GlobalRequest globalRequest)
+        {
+            if (!DoValidateToken<FolderCopyResponse>(clientSocket, globalRequest)) return;
+            FolderCopyRequest request = ConverTo<FolderCopyRequest>(globalRequest.RequestObject);
+            int status = ResponseStatus.SUCCESS;
+            string message = ResponseStatus.SUCCESS_MESSAGE;
+            string userId = globalRequest.AuthentToken.Split('.')[0];
+
+            CompositeItem folder = dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == request.FolderId);
+            string folderName = folder.ItemName + "-Copy";
+            string folderPath = request.DestinationPath + "/" + folderName;
+            // thêm db
+            dbContext.CompositeItems.Add(new CompositeItem()
+            {
+                ItemId = GetId(),
+                ItemPath = folderPath,
+                ParentPath = request.DestinationPath,
+                ItemName = folderName,
+                UserId = userId,
+                ItemType = CompositeConstance.FOLDER,
+                CopyFrom = request.FolderId,
+                DateModify = DateTime.Now,
+            });
+            // chuyển tất cả con của folder gốc sang folder copy
+            // lấy tất cả children từ folder gốc
+            var compositeItems = dbContext.CompositeItems.Where(item => item.ParentPath == folder.ItemPath).ToList();
+            var copyCompositeItems = compositeItems.Select(item => new CompositeItem()
+            {
+                ItemId = GetId(),
+                ItemPath = folderPath + "/" + item.ItemName,
+                ParentPath = folderPath,
+                ItemName = item.ItemName,
+                UserId = item.UserId,
+                ItemType = item.ItemType,
+                CopyFrom = item.ItemId,
+                DateModify = DateTime.Now,
+            }).ToList();
+            dbContext.CompositeItems.AddRange(copyCompositeItems);
+
+            dbContext.SaveChangesAsync();
+
+            TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
+            {
+                Route = globalRequest.Route,
+                AuthentToken = globalRequest.AuthentToken,
+                RequestObject = new FolderCopyResponse()
+                {
+                    Status = status,
+                    Message = message
+                }
+            });
+        }
+
         // File
         public static void AddFile(Socket clientSocket, GlobalRequest globalRequest)
         {
@@ -309,6 +366,7 @@ namespace FTPServer
                 ItemName = request.FileName,
                 UserId = userId,
                 ItemType = CompositeConstance.FILE,
+                DateModify = DateTime.Now,
             });
             dbContext.SaveChanges();
         }
@@ -322,7 +380,8 @@ namespace FTPServer
             CompositeItem file = dbContext.CompositeItems.First(item => item.ItemPath == request.FilePath && item.UserId == userId);
             // lấy socket client
             Socket clientFileSocket = Server.GetFileTranferClientSocket(request.ClientEndpoint);
-            FileInfo fileInfo = new FileInfo(StandardizeFilePath(file.ItemId));
+            string filePath = File.Exists(StandardizeFilePath(file.ItemId)) ? StandardizeFilePath(file.ItemId) : StandardizeFilePath(file.CopyFrom);
+            FileInfo fileInfo = new FileInfo(filePath);
             
             // gửi response sẳn sàng kết nối
             TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
@@ -337,7 +396,7 @@ namespace FTPServer
                 }
             });
             // bắt đầu truyền file
-            HandleDownloadFile(clientFileSocket, StandardizeFilePath(file.ItemId));
+            HandleDownloadFile(clientFileSocket, StandardizeFilePath(filePath));
         }
 
         public static void UpdateFileName(Socket clientSocket, GlobalRequest globalRequest)
@@ -358,6 +417,7 @@ namespace FTPServer
                 CompositeItem compositeItem = dbContext.CompositeItems.First(item => item.ItemId == fileId);
                 compositeItem.ItemName = request.FileName;
                 compositeItem.ItemPath = $"{compositeItem.ParentPath}/{request.FileName}";
+                compositeItem.DateModify = DateTime.Now;
                 dbContext.SaveChangesAsync();
             }
             TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
@@ -391,6 +451,7 @@ namespace FTPServer
                 CompositeItem currentFile = dbContext.CompositeItems.First(file => file.ItemId == fileId);
                 currentFile.ItemPath = request.FileNewPath;
                 currentFile.ParentPath = request.FileNewPath.Substring(0, request.FileNewPath.Length - currentFile.ItemName.Length - 1);
+                currentFile.DateModify = DateTime.Now;
                 dbContext.SaveChangesAsync();
             }
             TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
@@ -404,7 +465,44 @@ namespace FTPServer
                 }
             });
         }
-        
+
+        public static void CopyFile(Socket clientSocket, GlobalRequest globalRequest)
+        {
+            if (!DoValidateToken<FileCopyResponse>(clientSocket, globalRequest)) return;
+            FileCopyRequest request = ConverTo<FileCopyRequest>(globalRequest.RequestObject);
+            int status = ResponseStatus.SUCCESS;
+            string message = ResponseStatus.SUCCESS_MESSAGE;
+            string userId = globalRequest.AuthentToken.Split('.')[0];
+            CompositeItem compositeItem = dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == request.FileId);
+            // tạo item path
+            string itemName = Path.GetFileNameWithoutExtension(compositeItem.ItemName) + "-Copy" + Path.GetExtension(compositeItem.ItemName);
+            string itemPath = request.FolderPath + "/" + itemName;
+            // thêm db
+            dbContext.CompositeItems.Add(new CompositeItem()
+            {
+                ItemId = GetId(),
+                ItemPath = itemPath,
+                ParentPath = request.FolderPath,
+                ItemName = itemName,
+                UserId = userId,
+                ItemType = CompositeConstance.FILE,
+                CopyFrom = request.FileId,
+                DateModify = DateTime.Now,
+            });
+            dbContext.SaveChangesAsync();
+
+            TcpProtocol.Send<GlobalResponse>(clientSocket, new GlobalResponse()
+            {
+                Route = globalRequest.Route,
+                AuthentToken = globalRequest.AuthentToken,
+                RequestObject = new FileCopyResponse()
+                {
+                    Status = status,
+                    Message = message
+                }
+            });
+        }
+
         public static void DeleteFile(Socket clientSocket, GlobalRequest globalRequest)
         {
             if (!DoValidateToken<FileDeleteResponse>(clientSocket, globalRequest)) return;

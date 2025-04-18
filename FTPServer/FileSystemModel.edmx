@@ -15,6 +15,8 @@
           <Property Name="ItemName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="UserId" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ItemType" Type="varchar" MaxLength="255" />
+          <Property Name="CopyFrom" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateModify" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -70,6 +72,8 @@
           <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK__Composite__UserI__3A81B327" FromRole="CompositeItem" ToRole="User" />
           <Property Name="ItemType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CopyFrom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateModify" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -120,6 +124,8 @@
           <EntitySetMapping Name="CompositeItems">
             <EntityTypeMapping TypeName="FILE_SYSTEMModel.CompositeItem">
               <MappingFragment StoreEntitySet="CompositeItem">
+                <ScalarProperty Name="DateModify" ColumnName="DateModify" />
+                <ScalarProperty Name="CopyFrom" ColumnName="CopyFrom" />
                 <ScalarProperty Name="ItemType" ColumnName="ItemType" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="ItemPath" ColumnName="ItemPath" />

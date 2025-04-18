@@ -11,6 +11,8 @@
     <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.FK__Composite__UserI__3A81B327" FromRole="CompositeItem" ToRole="User" />
     <Property Name="ItemType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CopyFrom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="DateModify" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="User">
     <Key>

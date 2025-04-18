@@ -14,6 +14,7 @@ namespace FTPServer.dto.dbdto
         private string _itemName;
         private string _userId;
         private string _itemType;
+        private DateTime _dateModify;
 
         public CompositeItemDTO(CompositeItem model)
         {
@@ -23,6 +24,7 @@ namespace FTPServer.dto.dbdto
             ItemName = model.ItemName;
             UserId = model.UserId;
             ItemType = model.ItemType;
+            DateModify = model.DateModify.GetValueOrDefault();
         }
 
         public string ItemId { get => _itemId; set => _itemId = value; }
@@ -31,5 +33,6 @@ namespace FTPServer.dto.dbdto
         public string ItemName { get => _itemName; set => _itemName = value; }
         public string UserId { get => _userId; set => _userId = value; }
         public string ItemType { get => _itemType; set => _itemType = value; }
+        public DateTime DateModify { get => _dateModify; set => _dateModify = value; }
     }
 }

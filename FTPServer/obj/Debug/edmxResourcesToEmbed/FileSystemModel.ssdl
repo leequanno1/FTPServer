@@ -10,6 +10,8 @@
     <Property Name="ItemName" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="UserId" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="ItemType" Type="varchar" MaxLength="255" />
+    <Property Name="CopyFrom" Type="nvarchar" MaxLength="255" />
+    <Property Name="DateModify" Type="datetime" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>

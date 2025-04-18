@@ -4,6 +4,8 @@
     <EntitySetMapping Name="CompositeItems">
       <EntityTypeMapping TypeName="FILE_SYSTEMModel.CompositeItem">
         <MappingFragment StoreEntitySet="CompositeItem">
+          <ScalarProperty Name="DateModify" ColumnName="DateModify" />
+          <ScalarProperty Name="CopyFrom" ColumnName="CopyFrom" />
           <ScalarProperty Name="ItemType" ColumnName="ItemType" />
           <ScalarProperty Name="ItemId" ColumnName="ItemId" />
           <ScalarProperty Name="ItemPath" ColumnName="ItemPath" />

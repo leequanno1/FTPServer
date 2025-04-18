@@ -20,6 +20,8 @@ namespace FTPServer
         public string ItemName { get; set; }
         public string UserId { get; set; }
         public string ItemType { get; set; }
+        public string CopyFrom { get; set; }
+        public Nullable<System.DateTime> DateModify { get; set; }
     
         public virtual User User { get; set; }
     }
