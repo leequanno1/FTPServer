@@ -286,9 +286,10 @@ namespace FTPServer
             string message = ResponseStatus.SUCCESS_MESSAGE;
             string userId = globalRequest.AuthentToken.Split('.')[0];
 
-            CompositeItem folder = dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == request.FolderId);
+            CompositeItem folder = dbContext.CompositeItems.FirstOrDefault(item => item.ItemPath == request.FolderPath && item.UserId == userId);
             string folderName = folder.ItemName + "-Copy";
             string folderPath = request.DestinationPath + "/" + folderName;
+            string folderId = folder.ItemId;
             // thêm db
             dbContext.CompositeItems.Add(new CompositeItem()
             {
@@ -298,7 +299,7 @@ namespace FTPServer
                 ItemName = folderName,
                 UserId = userId,
                 ItemType = CompositeConstance.FOLDER,
-                CopyFrom = request.FolderId,
+                CopyFrom = folderId,
                 DateModify = DateTime.Now,
             });
             // chuyển tất cả con của folder gốc sang folder copy
@@ -475,10 +476,11 @@ namespace FTPServer
             int status = ResponseStatus.SUCCESS;
             string message = ResponseStatus.SUCCESS_MESSAGE;
             string userId = globalRequest.AuthentToken.Split('.')[0];
-            CompositeItem compositeItem = dbContext.CompositeItems.FirstOrDefault(item => item.ItemId == request.FileId);
+            CompositeItem compositeItem = dbContext.CompositeItems.FirstOrDefault(item => item.ItemPath == request.FilePath && item.UserId == userId);
             // tạo item path
             string itemName = Path.GetFileNameWithoutExtension(compositeItem.ItemName) + "-Copy" + Path.GetExtension(compositeItem.ItemName);
             string itemPath = request.FolderPath + "/" + itemName;
+            string itemId = compositeItem.ItemId;
             // thêm db
             dbContext.CompositeItems.Add(new CompositeItem()
             {
@@ -488,7 +490,7 @@ namespace FTPServer
                 ItemName = itemName,
                 UserId = userId,
                 ItemType = CompositeConstance.FILE,
-                CopyFrom = request.FileId,
+                CopyFrom = itemId,
                 DateModify = DateTime.Now,
             });
             dbContext.SaveChangesAsync();

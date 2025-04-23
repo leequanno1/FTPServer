@@ -10,11 +10,11 @@ namespace FTPServer.dto.requests
     internal class FileCopyRequest
     {
         // Cần copy file nào?
-        private string _fileId;
+        private string _filePath;
         // Copy vào thư mục nào?
         private string _folderPath;
 
-        public string FileId { get => _fileId; set => _fileId = value; }
         public string FolderPath { get => _folderPath; set => _folderPath = value; }
+        public string FilePath { get => _filePath; set => _filePath = value; }
     }
 }
