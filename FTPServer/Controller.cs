@@ -5,6 +5,7 @@ using FTPServer.dto.responses;
 using lib;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
@@ -213,17 +214,17 @@ namespace FTPServer
             } else
             {
                 CompositeItem curentFolder = dbContext.CompositeItems.FirstOrDefault(folder => folder.ItemId == folderId);
-
-                // đổi path item con
                 var childItems = dbContext.CompositeItems.Where(item => item.ParentPath == curentFolder.ItemPath);
+                // đổi path item con
                 foreach(CompositeItem childItem in childItems)
                 {
-                    childItem.ParentPath = request.FolderNewPath;
-                    childItem.ItemPath = $"{request.FolderNewPath}/{childItem.ItemName}";
+                    childItem.ParentPath = request.FolderNewPath + "/" + curentFolder.ItemName;
+                    childItem.ItemPath = request.FolderNewPath + "/" + curentFolder.ItemName + "/"+childItem.ItemName;
                     childItem.DateModify = DateTime.Now;
                 }
-                curentFolder.ItemPath = request.FolderNewPath;
-                curentFolder.ParentPath = request.FolderNewPath.Substring(0, request.FolderNewPath.Length - curentFolder.ItemName.Length - 1);
+
+                curentFolder.ItemPath = request.FolderNewPath+"/"+curentFolder.ItemName;
+                curentFolder.ParentPath = request.FolderNewPath;
                 curentFolder.DateModify = DateTime.Now;
                 dbContext.SaveChangesAsync();
             }
@@ -443,7 +444,7 @@ namespace FTPServer
             int status = ResponseStatus.SUCCESS;
             string message = ResponseStatus.SUCCESS_MESSAGE;
             string userId = globalRequest.AuthentToken.Split('.')[0];
-            string fileId = FolderExisted(request.FilePath, userId);
+            string fileId = FileExisted(request.FilePath, userId);
             if (String.IsNullOrEmpty(fileId))
             {
                 status = ResponseStatus.ERROR;
@@ -452,8 +453,8 @@ namespace FTPServer
             else
             {
                 CompositeItem currentFile = dbContext.CompositeItems.FirstOrDefault(file => file.ItemId == fileId);
-                currentFile.ItemPath = request.FileNewPath;
-                currentFile.ParentPath = request.FileNewPath.Substring(0, request.FileNewPath.Length - currentFile.ItemName.Length - 1);
+                currentFile.ItemPath = request.FileNewPath +"/" + currentFile.ItemName;
+                currentFile.ParentPath = request.FileNewPath;
                 currentFile.DateModify = DateTime.Now;
                 dbContext.SaveChangesAsync();
             }
