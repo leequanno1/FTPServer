@@ -23,10 +23,10 @@ namespace FTPServer
     {
         private static string privateKey = "deCsf55CnPBMNOlqLyzlb+6w2Vud1dFWYRuG+q+bjJ2zZk2MDIJc12RJtjuCPvoZMtVy+dQ5MbrQnlnnYRUZls8+JBMyC4zHXzGIUBwBuLeLJ9a1VYWKsgs9UmiMit2lhJUg788Phvx04X5JCXP//reLY2WGVeJvR0hhtl8B2zIlUOjQOX3mIKKmZ+g7HOGk";
 
-        private static FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
         // authen
         public static void LoginController(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             LoginRequest request = ConverTo<LoginRequest>(globalRequest.RequestObject);
             User user = dbContext.Users.FirstOrDefault(item => item.Username == request.Username && item.Password == request.Password);
             string id = user == null ? String.Empty : user.UserId;
@@ -53,6 +53,7 @@ namespace FTPServer
 
         public static void SignUpController(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             SignupRequest request = ConverTo<SignupRequest>(globalRequest.RequestObject);
             // check if username is existed?
             if (UsernameExisted(request.Username))
@@ -94,12 +95,13 @@ namespace FTPServer
         }
 
         // List
-        public static void ListController(Socket clientSocket, GlobalRequest globalRequest)
+        public static async void ListController(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<ListResponse>(clientSocket, globalRequest)) return;
             ListRequest request = ConverTo<ListRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
-            var compositeItems = dbContext.CompositeItems.Where(item => item.UserId == userId && item.ParentPath == request.FolderPath).ToList();
+            var compositeItems = await dbContext.CompositeItems.Where(item => item.UserId == userId && item.ParentPath == request.FolderPath).ToListAsync();
             List<CompositeItemDTO> folders = new List<CompositeItemDTO>();
             List<CompositeItemDTO> files = new List<CompositeItemDTO>();
             foreach (var item in compositeItems)
@@ -129,6 +131,7 @@ namespace FTPServer
         // Folder
         public static void AddFolder(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FolderAddResponse>(clientSocket, globalRequest)) return;
             FolderAddRequest request = ConverTo<FolderAddRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
@@ -167,6 +170,7 @@ namespace FTPServer
 
         public static void UpdateFolderName(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FolderUpdateResponse>(clientSocket, globalRequest)) return;
             FolderUpdateRequest request = ConverTo<FolderUpdateRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
@@ -201,6 +205,7 @@ namespace FTPServer
 
         public static void MoveFolder(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FolderMoveResponse>(clientSocket, globalRequest)) return;
             FolderMoveRequest request = ConverTo<FolderMoveRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
@@ -242,6 +247,7 @@ namespace FTPServer
 
         public static void DeleteFolder(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FolderDeleteResponse>(clientSocket, globalRequest)) return;
             FolderDeleteRequest request = ConverTo<FolderDeleteRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -281,6 +287,7 @@ namespace FTPServer
 
         public static void CopyFolder(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FolderCopyResponse>(clientSocket, globalRequest)) return;
             FolderCopyRequest request = ConverTo<FolderCopyRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
@@ -336,6 +343,7 @@ namespace FTPServer
         // File
         public static void AddFile(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FileAddResponse>(clientSocket, globalRequest)) return;
             FileAddRequest request = ConverTo<FileAddRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -376,6 +384,7 @@ namespace FTPServer
 
         public static void DownloadFile(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FileDowloadResponse>(clientSocket, globalRequest)) return;
             FileDownloadRequest request = ConverTo<FileDownloadRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -405,6 +414,7 @@ namespace FTPServer
 
         public static void UpdateFileName(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FileUpdateResponse>(clientSocket, globalRequest)) return;
             FileUpdateRequest request = ConverTo<FileUpdateRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -439,6 +449,7 @@ namespace FTPServer
 
         public static void MoveFile(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FileMoveResponse>(clientSocket, globalRequest)) return;
             FileMoveRequest request = ConverTo<FileMoveRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
@@ -472,6 +483,7 @@ namespace FTPServer
 
         public static void CopyFile(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FileCopyResponse>(clientSocket, globalRequest)) return;
             FileCopyRequest request = ConverTo<FileCopyRequest>(globalRequest.RequestObject);
             int status = ResponseStatus.SUCCESS;
@@ -510,6 +522,7 @@ namespace FTPServer
 
         public static void DeleteFile(Socket clientSocket, GlobalRequest globalRequest)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             if (!DoValidateToken<FileDeleteResponse>(clientSocket, globalRequest)) return;
             FileDeleteRequest request = ConverTo<FileDeleteRequest>(globalRequest.RequestObject);
             string userId = globalRequest.AuthentToken.Split('.')[0];
@@ -548,6 +561,7 @@ namespace FTPServer
         /// <returns>Return true if user existed</returns>
         private static bool UsernameExisted(string username)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             User user = dbContext.Users.FirstOrDefault(x => x.Username == username);
             return user != null;
         }
@@ -578,6 +592,7 @@ namespace FTPServer
         /// <returns>Return folder id if existed else null</returns>
         private static string FolderExisted(String folderPath, string userId)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             var folder = dbContext.CompositeItems.FirstOrDefault(item => item.UserId == userId && item.ItemPath == folderPath && item.ItemType == CompositeConstance.FOLDER);
             return folder != null ? folder.ItemId : null;
         }
@@ -615,6 +630,7 @@ namespace FTPServer
         /// <returns>Return file id if existed else null</returns>
         private static string FileExisted(string filePath, string userId)
         {
+            FILE_SYSTEMEntities dbContext = new FILE_SYSTEMEntities();
             var file = dbContext.CompositeItems.FirstOrDefault(item => item.UserId == userId && item.ItemPath == filePath);
             return file != null ? file.ItemId : null;
         }
